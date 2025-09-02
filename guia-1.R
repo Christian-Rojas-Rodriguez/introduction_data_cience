@@ -1,13 +1,22 @@
-setwd('/home/smoke-data/projects/icd')
+# Guia 1: Introducción a R y RStudio
+#install.packages(c("ggplot2", "dplyr", "tidyr", "readr", "shiny"))
 
-#we need the package to execute next lines
-install.packages('tidyverse')
+# Load required libraries
+library(readr)
+library(dplyr)
+library(ggplot2)
+  
+df <- read_csv('properati_SM_SPA.csv')
 
-local_lib_path <- file.path(getwd(), "R_libs")
-.libPaths(c(local_lib_path, .libPaths()))
-install.packages("tidyverse", lib = local_lib_path, repos = "http://cran.rstudio.com/")
+#View(df)
+#print(glimpse(df))
 
+print(count(distinct(df, l4)))
 
-library(tidyverse)
-df<-read_csv('properati_SM_SPA.csv')
-
+print(
+ggplot(df, aes(x=sup_cubierta, y=precio, color=tipo_propiedad)) +
+geom_point() +
+geom_smooth(method='lm') +
+xlab("Superficie cubierta [m2]") +
+ylab("Precio [USD]")
+)
